@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <title>Geeky Gratuity</title>
+
+  <script src="js/gratitude.js"></script>
+  <script src="js/primes.js"></script>
+
+</head>
+<body>
+	<div class="row"></div>
+	<div class="container-fluid">
+
+		<div class="row">
+
+			<div class="col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
+
+				<div class="panel panel-default">
+
+					<div class="panel-body">
+
+						<form role="form">
+							<div class="form-group">
+								<div class="input-group">
+									<span class="input-group-addon">$</span>
+									<input id="total" type="text" class="form-control" placeholder="Total before tip" required autofocus />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+									<input id="minimumTip" type="text" class="form-control" placeholder="Minimum tip percentage" required />
+									<span class="input-group-addon">%</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="input-group">
+									<input id="maximumTip" type="text" class="form-control" placeholder="Maximum tip percentage" required />
+									<span class="input-group-addon">%</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<button id="calculate" class="btn btn-lg btn-primary btn-block" type="button">Calculate</button>							
+							</div>
+						</form>
+
+					</div>
+
+					<div class="panel-footer">
+
+						<div id="resultGrid"></div>
+
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var bindEvent = function(element, type, handler) {
+		    if (element.addEventListener) {
+		        element.addEventListener(type, handler, false);
+		    } else {
+		        element.attachEvent('on'+type, handler);
+		    }
+		}
+
+		bindEvent(window, 'load', function() {
+
+			var total = document.getElementById('total');
+			var minimumTip = document.getElementById('minimumTip');
+			var maximumTip = document.getElementById('maximumTip');
+			var calculate = document.getElementById('calculate');
+			var resultGrid = document.getElementById('resultGrid');
+
+			calculate.disabled = false;
+
+			bindEvent(calculate, 'click', function(){
+				
+				var results = gratitude.calculate(
+					total.value, 
+					minimumTip.value,
+					maximumTip.value,
+					gratitude.parsers);
+
+				var container = document.createElement('table');
+				var tb = document.createElement('tbody');
+				var th = document.createElement('thead');
+				th.innerHTML = "<tr><th>Tip $</th><th>Tip %</th><th>Total</th><th>Type</th></tr>";
+				container.appendChild(th);
+				container.appendChild(tb);
+				container.className = 'table table-striped table-bordered'
+
+				if (results.length == 0) tb.innerHTML = '<tr><td>No "interesting" numbers found.</td></tr>';
+
+				var i,j;
+				for (i = 0, j = results.length; i < j; i++) {
+					var row = document.createElement('tr');
+					var tip = document.createElement('td');
+					var per = document.createElement('td');
+					var tot = document.createElement('td');
+					var typ = document.createElement('td');
+
+					tip.innerText = '$' + results[i].tip.toFixed(2);
+					per.innerText = results[i].tipPercent + '%';
+					tot.innerText = '$' + results[i].total.toFixed(2)
+					typ.innerText = results[i].parser;
+					row.title = results[i].description;
+
+					row.appendChild(tip);
+					row.appendChild(per);
+					row.appendChild(tot);
+					row.appendChild(typ);
+
+					tb.appendChild(row)					
+				}
+
+				resultGrid.innerHTML = '';
+				resultGrid.appendChild(container);
+
+			});
+		});
+	</script>
+
+</body>
+</html>
