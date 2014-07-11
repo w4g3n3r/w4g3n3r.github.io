@@ -120,6 +120,23 @@ var gratitude = {
 
 				return ec.indexOf(total) == 0;
 			}
+		},
+
+		powerOfTwo : {
+			name: 'Power of Two',
+			description: 'Power of two.',
+			validate: function (totalCents, tipCents) {
+				var total = (totalCents + tipCents).toString();
+				return twos[total];
+			}			
+		},
+
+		perfectSquare : {
+			name: 'Perfect Square',
+			description: 'Number is a perfect square.',			
+			validate: function (totalCents, tipCents) {
+				return Math.sqrt(totalCents + tipCents) % 1 == 0;
+			}			
 		}
 	}
 }

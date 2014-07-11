@@ -141,6 +141,22 @@
       assert.ok(!sut(2222, 0));
     });
 
+    QUnit.test('powerOfTwos parser identifies the first 32 powers of two.', function(assert){
+      var sut = gratitude.parsers.powerOfTwo.validate;
+
+      assert.ok(sut(2147483648, 0));
+      assert.ok(sut(1, 0));
+      assert.ok(!sut(3, 0));
+    });    
+
+    QUnit.test('perfectSquare parser identifies perfect squares.', function(assert){
+      var sut = gratitude.parsers.perfectSquare.validate;
+
+      assert.ok(sut(64, 0));
+      assert.ok(sut(16, 0));
+      assert.ok(!sut(2, 0));
+    });
+
   </script>
 </head>
 <body>
