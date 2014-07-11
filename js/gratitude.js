@@ -78,6 +78,48 @@ var gratitude = {
 				}
 				return false;
 			}
+		},
+
+		pi : {
+			name: 'π',
+			description: 'The amount contains the same digits as π.',
+			validate: function (totalCents, tipCents) {
+				var pi = '314159265358979323846264338327950288419716939937510';
+				var total = (totalCents + tipCents).toString();
+
+				return pi.indexOf(total) == 0;
+			}
+		},
+
+		fibonacci : {
+			name: 'Fibonacci Number',
+			description: 'This amount is equal to a number in the fibonacci sequence.',
+			validate: function (totalCents, tipCents) {
+				var total = (totalCents + tipCents).toString();
+				return fibonaccis[total];
+			}
+		},
+
+		eulersNumber : {
+			name: 'e',
+			description: 'Eulers Number.',
+			validate: function (totalCents, tipCents) {
+				var e = '271828182845904523536028747135266249775724709369995';
+				var total = (totalCents + tipCents).toString();
+
+				return e.indexOf(total) == 0;
+			}
+		},
+
+		eulersConstant : {
+			name: '\u03B3',
+			description: 'Eulers Constant.',
+			validate: function (totalCents, tipCents) {
+				var ec = '5772156649015328606065120900824024310421';
+				var total = (totalCents + tipCents).toString();
+
+				return ec.indexOf(total) == 0;
+			}
 		}
 	}
 }

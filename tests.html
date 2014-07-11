@@ -108,6 +108,39 @@
       assert.ok(sut(123123, 0));
     });
 
+    QUnit.test('pi parser identifies numbers matching pi.', function(assert){
+      var sut = gratitude.parsers.pi.validate;
+
+      assert.ok(sut(3141592, 0));
+      assert.ok(sut(31, 0));
+      assert.ok(!sut(2222, 0));
+    });
+
+    QUnit.test('fibonacci parser identifies the first 29 fibonacci numbers.', function(assert){
+      var sut = gratitude.parsers.fibonacci.validate;
+
+      assert.ok(sut(46368, 0));
+      assert.ok(sut(317811, 0));
+      assert.ok(sut(2, 0));
+      assert.ok(!sut(4, 0));
+    });
+
+    QUnit.test('eulersNumber parser identifies numbers matching e.', function(assert){
+      var sut = gratitude.parsers.eulersNumber.validate;
+
+      assert.ok(sut(2718281, 0));
+      assert.ok(sut(2718, 0));
+      assert.ok(!sut(2222, 0));
+    });
+
+    QUnit.test('eulersConstant parser identifies numbers matching \u03B3.', function(assert){
+      var sut = gratitude.parsers.eulersConstant.validate;
+
+      assert.ok(sut(577215, 0));
+      assert.ok(sut(577, 0));
+      assert.ok(!sut(2222, 0));
+    });
+
   </script>
 </head>
 <body>
